@@ -8,7 +8,7 @@
 # export TERMINAL="st"
 
 exec st
-#exec gnome-calculator
+exec --no-startup-id speedcrunch
 
 # #---Basic Definitions---# #
 for_window [class="^.*"] border pixel 2
