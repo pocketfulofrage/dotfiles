@@ -7,6 +7,9 @@
 # export FILE="ranger"
 # export TERMINAL="st"
 
+exec st
+#exec gnome-calculator
+
 # #---Basic Definitions---# #
 for_window [class="^.*"] border pixel 2
 gaps inner 15
@@ -25,13 +28,49 @@ for_window [instance="dropdown_dropdowncalc"] resize set 800 300
 for_window [instance="dropdown_tmuxdd"] border pixel 3
 for_window [instance="dropdown_dropdowncalc"] border pixel 2
 for_window [instance="dropdown_*"] move position center
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [class="(?i)mplayer"] floating enable
+for_window [instance="speedcrunch*"] floating enable
+for_window [instance="speedcrunch*"] resize set 800 600
+for_window [instance="speedcrunch*"] move position center
+for_window [instance="speedcrunch*"] mark "calc", move scratchpad
+
+
+# #---Dropdown Windows---# #
+# General dropdown window traits. The order can matter.
+#for_window [instance="dropdown_*"] floating enable
+#for_window [instance="dropdown_*"] move scratchpad
+#for_window [instance="dropdown_*"] sticky enable
+#for_window [instance="dropdown_*"] scratchpad show
+#for_window [instance="dropdown_tmuxdd"] resize set 625 450
+#for_window [instance="dropdown_dropdowncalc"] resize set 800 300
+#for_window [instance="dropdown_tmuxdd"] border pixel 3
+#for_window [instance="dropdown_dropdowncalc"] border pixel 2
+#for_window [instance="dropdown_*"] move position center
+
+# #--Floating Calculator--# #
+#for_window [instance="gnome-calculator"] floating enable
+#for_window [instance="gnome-calculator"] move scratchpad
+#for_window [instance="gnome-calculator"] scratchpad show
+#for_window [instance="gnome-caluclator"] move position 80px 50px
+#for_window [instance="gnome-calculator"] move scratchpad
+
+set $transparent #0000006f
 
 bar {
+        colors {
+                background $transparent
+        }
+
         font pango:mono 10
         status_command i3blocks
+        i3bar_command i3bar -t
         position top
         mode dock
         modifier None
+        workspace_buttons yes
+        bindsym button3 exec --no-startup-id dmenu
 }
 
 # #---Basic Bindings---# #
@@ -40,18 +79,18 @@ bindsym $mod+Shift+Return       exec --no-startup-id samedir
 bindsym $mod+Shift+space        floating toggle
 bindsym $mod+space              focus mode_toggle
 
-# use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
-
 bindsym $mod+Escape             workspace prev
 bindsym $mod+Shift+Escape       exec --no-startup-id prompt "Exit i3?" "i3-msg exit"
 
+# #---Mouse bindings---# #
+floating_modifier               $mod
+
 #STOP/HIDE EVERYTHING:
-bindsym $mod+Shift+Delete       exec --no-startup-id lmc truemute ; exec --no-startup-id lmc pause ; exec --no-startup-id pauseallmpv; workspace 0; exec $term -e htop ; exec $term -e $FILE
+bindsym $mod+Shift+Delete       exec --no-startup-id lmc truemute ; exec --no-startup-id lmc pause ; exec --no-startup-id pauseallmpv; work>
 
 # #---Letter Key Bindings---# #
 bindsym $mod+q                  [con_id="__focused__" instance="^(?!dropdown_).*$"] kill
-bindsym $mod+Shift+q            [con_id="__focused__" instance="^(?!dropdown_).*$"] exec --no-startup-id kill -9 `xdotool getwindowfocus getwindowpid`
+bindsym $mod+Shift+q            [con_id="__focused__" instance="^(?!dropdown_).*$"] exec --no-startup-id kill -9 `xdotool getwindowfocus ge>
 
 bindsym $mod+Shift+r            exec --no-startup-id winresize
 
@@ -68,7 +107,10 @@ bindsym $mod+Shift+i            exec --no-startup-id i3resize up
 bindsym $mod+o                  sticky toggle
 bindsym $mod+Shift+o            exec --no-startup-id i3resize right
 
-bindsym $mod+a                  exec --no-startup-id ddspawn dropdowncalc -f mono:pixelsize=24
+#bindsym $mod+Ctrl+a            exec --no-startup-id ddspawn dropdowncalc -f mono:pixelsize=24
+#bindsym $mod+a                 [instance="gnome-calculator"] scratchpad show
+bindsym $mod+a                  [con_mark="calc"] scratchpad show
+
 
 bindsym $mod+s                  gaps inner current plus 5
 bindsym $mod+Shift+s            gaps inner current minus 5
@@ -80,7 +122,7 @@ mode "$freeze" { bindsym $mod+Shift+f mode "default"
 }
 
 bindsym $mod+f                  fullscreen toggle
-bindsym $mod+Shift+f            mode "$freeze" ;; exec --no-startup-id notify-send "Distraction-free mode activated." "Press Super+Shift+f to return."
+bindsym $mod+Shift+f            mode "$freeze" ;; exec --no-startup-id notify-send "Distraction-free mode activated." "Press Super+Shift+f >
 
 bindsym $mod+g                  workspace prev
 
@@ -166,7 +208,6 @@ bindsym $mod+Shift+7    move container to workspace $ws7
 bindsym $mod+Shift+8    move container to workspace $ws8
 bindsym $mod+Shift+9    move container to workspace $ws9
 bindsym $mod+Shift+0    move container to workspace $ws10
-
 for_window [class="Pinentry"] sticky enable
 for_window [class="sent"] border pixel 0px
 for_window [title="GIMP Startup"] move workspace $ws5
@@ -197,5 +238,4 @@ bindsym $mod+Shift+Left         move left
 bindsym $mod+Shift+Down         move down
 bindsym $mod+Shift+Up           move up
 bindsym $mod+Shift+Right        move right
-exec_always --no-startup-id notify-send -i ~/.local/share/larbs/larbs.png 'Welcome to LARBS:' 'Press Super+F1 for the manual.' -t 10000
-exec --no-startup-id pulseaudio --start
+#exec_always --no-startup-id notify-send -i ~/.local/share/larbs/larbs.png 'Welcome to LARBS:' 'Press Super+F1 for the manual.' -t 10000
