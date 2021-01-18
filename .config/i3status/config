@@ -1,129 +1,127 @@
-command=~/.local/bin/statusbar/$BLOCK_NAME
-separator_block_width=15
-markup=pango
+general {
+        output_format = "i3bar"
+        colors = false
+        markup = pango
+        interval = 1
+}
 
-## Quick Launcher
+order += "cpu_temperature 0"
+order += "load"
+order += "disk /"
+order += "wireless wlo1"
+order += "volume master"
+order += "tztime local"
 
-[nautilus]
-full_text=
-command=echo button=$BLOCK_BUTTON x=$BLOCK_X y=$BLOCK_Y | nautilus --no-desktop &
-align=left
-color=#E4E49E
+cpu_temperature 0 {
+        format = "<span background='#ff5555' color='black'>  </span><span background='#e5e9f0' color='black'> %degrees °C </span>"
+        path = "/sys/class/thermal/thermal_zone0/temp"
+}
 
-[sublime]
-full_text=
-command=echo button=$BLOCK_BUTTON x=$BLOCK_X y=$BLOCK_Y | subl --class=subl &
-align=left
-color=#E4E49E
+load {
+        format = "<span background='#50fa7b' color='black'>  </span><span background='#e5e9f0' color='black'> %5min Load </span>"
+}
 
-[steam]
-full_text=
-command=echo button=$BLOCK_BUTTON x=$BLOCK_X y=$BLOCK_Y | steam &
-align=left
-color=#E4E49E
+disk "/" {
+        format = "<span background='#f1fa8c' color='black'>  </span><span background='#e5e9f0' color='black'> %free Free </span>"
+}
 
-[spotify]
-full_text=
-command=echo button=$BLOCK_BUTTON x=$BLOCK_X y=$BLOCK_Y | spotify &
-align=left
-color=#E4E49E
+wireless wlo1 {
+        format_up = "<span background='#bd93f9' color='black'>  </span><span background='#e5e9f0' color='black'> %essid </span>"
+        format_down = "<span background='#bd93f9' color='black'>  </span><span background='#e5e9f0' color='black'> Disconnected </span>"
+}
 
-[spacer]
-full_text=
+volume master {
+        format = "<span background='#ff79c6' color='black'>  </span><span background='#e5e9f0' color='black'> %volume </span>"
+        format_muted = "<span background='#ff79c6' color='black'>  </span><span background='#e5e9f0' color='black'> Muted </span>"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
+}
 
-## Modules
+tztime local {
+		format = "<span background='#8be9fd' color='black'>  </span><span background='#e5e9f0' color='black'> %time </span>"
+		format_time = "%a %-d %b %H:%M"
+}
 
-#[mpd]
-#label=
-#command=i3mpd
-#interval=1
-#align=left
 
-[iface]
-command=~/.local/bin/statusbar/iface
-LABEL=
-IFACE=eno1
-#ADDRESS_FAMILY=inet6?
-color=#00FF00
-interval=10
 
-#[bandwidth]
-#color=#00FF00
-#instance=eno1;in
-#label=
-#interval=1
 
-#[bandwidth]
-#color=#00FF00
-#instance=eno1;out
-#label=
-#interval=1
 
-[record]
-command=cat /tmp/recordingicon
-interval=once
-signal=9
 
-[music]
-label=🎼
-interval=once
-signal=11
-[news]
-label=
-interval=once
-signal=6
 
-#[iplocate]
-#interval=30
-
-[pacpackages]
-label=
-interval=once
-signal=8
-
-[torrent]
-interval=20
-signal=7
-
-[weather]
-interval=18000
-signal=5
-
-#[mailbox]
-#label=📬
-#interval=180
-#signal=12
-
-#[memory]
-#interval=30
-#label=🧠
-
-[cpu]
-interval=15
-label=
-
-[volume]
-interval=once
-signal=10
-
-#[disk]
-#interval=60
-#command=disk /
-
-#[disk]
-#interval=60
-#command=disk /home 🏠
-
-[battery]
-command=battery BAT0
-interval=5
-
-[clock]
-label=
-interval=30
-
-[internet]
-interval=10
-
-#[help]
-#interval=once
+#
+#
+#
+#general {
+#        output_format = "i3bar"
+#        colors = false
+#        markup = pango
+#        interval = 5
+#        color_good = '#2f343f'
+#		color_degraded = '#ebcb8b'
+#		color_bad = '#ba5e57'
+#}
+#
+#order += "load"
+#order += "cpu_temperature 0"
+#order += "disk /"
+#order += "disk /home"
+#order += "ethernet enp1s0"
+#order += "wireless wlp2s0"
+#order += "volume master"
+#order += "battery 1"
+#order += "tztime local"
+#
+#load {
+#        format = "<span background='#f59335'>  %5min Load </span>"
+#}
+#
+#cpu_temperature 0 {
+#        format = "<span background='#bf616a'>  %degrees °C </span>"
+#        path = "/sys/class/thermal/thermal_zone0/temp"
+#}
+#
+#disk "/" {
+#        format = "<span background='#fec7cd'>  %free Free </span>"
+#}
+#
+#disk "/home" {
+#        format = "<span background='#a1d569'>  %free Free </span>"
+#}
+#
+#ethernet enp1s0 {
+#        format_up = "<span background='#88c0d0'>  %ip </span>"
+#        format_down = "<span background='#88c0d0'>  Disconnected </span>"
+#}
+#
+#wireless wlp2s0 {
+#        format_up = "<span background='#b48ead'>  %essid </span>"
+#        format_down = "<span background='#b48ead'>  Disconnected </span>"
+#}
+#
+#volume master {
+#        format = "<span background='#ebcb8b'>  %volume </span>"
+#        format_muted = "<span background='#ebcb8b'>  Muted </span>"
+#        device = "default"
+#        mixer = "Master"
+#        mixer_idx = 0
+#}
+#
+#battery 1 {
+#	last_full_capacity = true
+#        format = "<span background='#a3be8c'>  %status %percentage </span>"
+#        format_down = "No Battery"
+#        status_chr = "Charging"
+#        status_bat = "Battery"
+#        status_unk = "Unknown"
+#        status_full = "Charged"
+#        path = "/sys/class/power_supply/BAT%d/uevent"
+#        low_threshold = 10
+#}
+#
+#tztime local {
+#		format = "<span background='#81a1c1'>  </span><span background='#e5e9f0' color='#000000'> %time </span>"
+#		format_time = "%a %-d %b %H:%M"
+#}
+#
+#
