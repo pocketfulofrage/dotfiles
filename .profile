@@ -1,1 +1,1 @@
-.config/shell/profile
+.zprofile
