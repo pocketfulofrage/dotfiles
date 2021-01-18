@@ -2,63 +2,6 @@ command=~/.local/bin/statusbar/$BLOCK_NAME
 separator_block_width=15
 markup=pango
 
-## Quick Launcher
-
-[nautilus]
-full_text=
-command=echo button=$BLOCK_BUTTON x=$BLOCK_X y=$BLOCK_Y | nautilus --no-desktop &
-align=left
-color=#E4E49E
-
-[sublime]
-full_text=
-command=echo button=$BLOCK_BUTTON x=$BLOCK_X y=$BLOCK_Y | subl --class=subl &
-align=left
-color=#E4E49E
-
-[steam]
-full_text=
-command=echo button=$BLOCK_BUTTON x=$BLOCK_X y=$BLOCK_Y | steam &
-align=left
-color=#E4E49E
-
-[spotify]
-full_text=
-command=echo button=$BLOCK_BUTTON x=$BLOCK_X y=$BLOCK_Y | spotify &
-align=left
-color=#E4E49E
-
-[spacer]
-full_text=
-
-## Modules
-
-#[mpd]
-#label=
-#command=i3mpd
-#interval=1
-#align=left
-
-[iface]
-command=~/.local/bin/statusbar/iface
-LABEL=
-IFACE=eno1
-#ADDRESS_FAMILY=inet6?
-color=#00FF00
-interval=10
-
-#[bandwidth]
-#color=#00FF00
-#instance=eno1;in
-#label=
-#interval=1
-
-#[bandwidth]
-#color=#00FF00
-#instance=eno1;out
-#label=
-#interval=1
-
 [record]
 command=cat /tmp/recordingicon
 interval=once
@@ -68,8 +11,8 @@ signal=9
 label=🎼
 interval=once
 signal=11
+
 [news]
-label=
 interval=once
 signal=6
 
@@ -77,7 +20,6 @@ signal=6
 #interval=30
 
 [pacpackages]
-label=
 interval=once
 signal=8
 
@@ -89,18 +31,15 @@ signal=7
 interval=18000
 signal=5
 
-#[mailbox]
-#label=📬
-#interval=180
-#signal=12
+[mailbox]
+interval=180
+signal=12
 
 #[memory]
 #interval=30
-#label=🧠
 
-[cpu]
-interval=15
-label=
+#[cpu]
+#interval=15
 
 [volume]
 interval=once
@@ -112,18 +51,18 @@ signal=10
 
 #[disk]
 #interval=60
-#command=disk /home 🏠
+#command=disk /home
 
 [battery]
 command=battery BAT0
 interval=5
 
 [clock]
-label=
+label=📅
 interval=30
 
 [internet]
 interval=10
 
-#[help]
-#interval=once
+[help-icon]
+interval=once
