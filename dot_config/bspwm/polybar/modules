@@ -1,116 +1,6 @@
-;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-;;
-;;	    ____        __      __              
-;;	   / __ \____  / /_  __/ /_  ____ ______
-;;	  / /_/ / __ \/ / / / / __ \/ __ `/ ___/
-;;	 / ____/ /_/ / / /_/ / /_/ / /_/ / /    
-;;	/_/    \____/_/\__, /_.___/\__,_/_/     
-;;	              /____/                    
-;;
-;; Created By Aditya Shakya @adi1090x
-;;
-;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+## Copyright (C) 2020-2022 Aditya Shakya <adi1090x@gmail.com>
+## Everyone is permitted to copy and distribute copies of this file under GNU-GPL3
 
-;; Global WM Settings
-
-[global/wm]
-margin-bottom = 0
-margin-top = 0
-
-include-file = ~/.config/bspwm/polybar/colors
-
-[bar/main]
-monitor =
-monitor-strict = false
-override-redirect = false
-
-bottom = false
-fixed-center = true
-
-width = 100%
-height = 20
-offset-x = 0
-offset-y = 0
-
-background = ${color.BACKGROUND}
-foreground = ${color.FOREGROUND}
-
-radius-top = 0.0
-radius-bottom = 0.0
-
-line-size = 2
-line-color = ${color.BLUE}
-
-border-size = 4
-border-color = ${color.BACKGROUND}
-
-padding = 1
-module-margin-left = 1
-module-margin-right = 1
-
-
-font-0 = "Iosevka Nerd Font:size=10;3"
-font-1 = "Iosevka Nerd Font:size=12;3"
-
-# mobile
-#modules-left = mod bspwm
-#modules-center = mpd
-#modules-right = volume backlight battery network date
-
-# desktop
-modules-left = mod bspwm
-modules-center = 
-modules-right = volume backlight network date
-
-separator =
-spacing = 0
-
-dim-value = 1.0
-
-wm-name = bspwm
-locale = 
-
-tray-position = right
-tray-detached = false
-tray-maxsize = 16
-tray-transparent = false
-tray-background = ${color.BACKGROUND}
-tray-offset-x = 0
-tray-offset-y = 0
-tray-padding = 0
-tray-scale = 1.0
-
-wm-restack = bspwm
-
-enable-ipc = true
-
-; bspwm
-scroll-up = bspc desktop -f prev.local
-scroll-down = bspc desktop -f next.local
-
-[settings]
-throttle-output = 5
-throttle-output-for = 10
-throttle-input-for = 30
-
-screenchange-reload = false
-
-compositing-background = source
-compositing-foreground = over
-compositing-overline = over
-compositing-underline = over
-compositing-border = over
-
-;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-;;
-;;	    __  ___          __      __         
-;;	   /  |/  /___  ____/ /_  __/ /__  _____
-;;	  / /|_/ / __ \/ __  / / / / / _ \/ ___/
-;;	 / /  / / /_/ / /_/ / /_/ / /  __(__  ) 
-;;	/_/  /_/\____/\__,_/\__,_/_/\___/____/  
-;;
-;; Created By Aditya Shakya @adi1090x
-;;
 ;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 
 [module/volume]
@@ -136,7 +26,7 @@ format-muted-prefix-font = 2
 format-muted-prefix-foreground = ${color.RED}
 
 label-volume = %percentage%%
-label-muted = " Muted"
+label-muted = " Mute"
 label-muted-foreground = #757575
 
 ramp-volume-0 = 奄
@@ -154,6 +44,17 @@ ramp-volume-foreground = ${color.BLUE}
 
 ramp-headphones-0 = 
 ramp-headphones-1 = 
+
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+[module/bna]
+type = custom/text
+
+content = " NA"
+content-prefix = 
+content-prefix-font = 2
+content-prefix-foreground = ${color.RED}
+content-padding = 0
 
 ;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 
@@ -181,13 +82,39 @@ ramp-foreground = ${color.MAGENTA}
 
 ;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 
+[module/brightness]
+type = internal/backlight
+
+card = ${system.graphics_card}
+
+enable-scroll = true
+
+format = <ramp> <label>
+
+label = %percentage%%
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-3 = 
+ramp-4 = 
+ramp-5 = 
+ramp-6 = 
+ramp-7 = 
+ramp-8 = 
+ramp-9 = 
+ramp-font = 2
+ramp-foreground = ${color.MAGENTA}
+
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
 [module/battery]
 type = internal/battery
 
 full-at = 99
 
-battery = BAT1
-adapter = ACAD
+battery = ${system.battery}
+adapter = ${system.adapter}
 
 poll-interval = 2
 time-format = %H:%M
@@ -239,14 +166,18 @@ fuzzy-match = true
 
 ; ws-icon-[0-9]+ = label;icon
 ; Note that the label needs to correspond with the bspwm workspace name
-;;ws-icon-0 = code;♚
-;;ws-icon-1 = office;♛
-;;ws-icon-2 = graphics;♜
-;;ws-icon-3 = mail;♝
-;;ws-icon-4 = web;♞
-;;ws-icon-default = ♟
+ws-icon-0 = I;
+ws-icon-1 = II;
+ws-icon-2 = III;
+ws-icon-3 = IV;
+ws-icon-4 = V;
+ws-icon-5 = VI;
+ws-icon-6 = VII;
+ws-icon-7 = VIII;
+ws-icon-default = 
 
 format = <label-state>
+format-font = 2
 
 label-monitor = %name%
 
@@ -262,21 +193,21 @@ label-monitor = %name%
 ;label-dimmed-focused-background = ${color.BACKGROUND}
 
 label-focused = %name%
-label-focused-foreground = ${color.BACKGROUND}
-label-focused-background = ${color.BLUE}
-;label-focused-underline = ${color.RED}
+label-focused-foreground = ${color.BLUE}
+label-focused-background = ${color.BACKGROUND}
+label-focused-underline = ${color.BLUE}
 label-focused-padding = 1
 
 label-occupied = %name%
-label-occupied-foreground = ${color.BACKGROUND}
-label-occupied-background = ${color.GREEN}
+label-occupied-foreground = ${color.GREEN}
+label-occupied-background = ${color.BACKGROUND}
 ;label-occupied-underline = ${color.GREEN}
 label-occupied-padding = 1
 
 label-urgent = %name%
-label-urgent-foreground = ${color.BACKGROUND}
-label-urgent-background = ${color.RED}
-;label-urgent-underline = ${color.RED}
+label-urgent-foreground = ${color.RED}
+label-urgent-background = ${color.BACKGROUND}
+label-urgent-underline = ${color.RED}
 label-urgent-padding = 1
 
 label-empty = %name%
@@ -284,9 +215,9 @@ label-empty-foreground = ${color.FOREGROUND}
 label-empty-padding = 1
 
 ; Separator in between workspaces
-label-separator = " "
+label-separator = "∙"
 label-separator-padding = 0
-;label-separator-foreground = ${color.YELLOW}
+label-separator-foreground = ${color.ALTBLACK}
 
 ;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 
@@ -305,53 +236,27 @@ label-floating = ", Float"
 label-pseudotiled = ", Pseudo"
 label-fullscreen = ", Full"
 
-label-locked = " Locked"
-label-sticky = " Sticky"
-label-private = " Private"
+label-locked = " | Locked"
+label-sticky = " | Sticky"
+label-private = " | Private"
 
-;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-
-[module/modicons]
-type = internal/bspwm
-
-format = <label-mode>
-format-background = ${color.YELLOW}
-format-foreground = ${color.BACKGROUND}
-format-padding = 1
-
-label-monocle = ""
-label-tiled = ""
-
-label-fullscreen = " "
-label-floating = " "
-label-pseudotiled = " "
-
-label-locked = " "
-label-sticky = " "
-label-private = " "
-
-;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-
-;;[module/date]
-;;type = internal/date
-;;interval = 1.0
-;;time = %I:%M %p
-;;time-alt = %A, %d %B %Y
-;;format = <label>
-;;format-prefix = " "
-;;format-prefix-font = 2
-;;format-prefix-foreground = ${color.RED}
-;;label = %time%
 ;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 
 [module/date]
-type = custom/script
-exec = ~/.config/bspwm/polybar/popup-calendar.sh
-interval = 5
-click-left = ~/.config/bspwm/polybar/popup-calendar.sh --popup
-format-background = ${colors.alt-background}
-format-foreground = ${colors.alt-foreground}
-label = %output:25%
+type = internal/date
+
+interval = 1.0
+
+time = %I:%M %p
+time-alt = %A, %d %B %Y
+
+format = <label>
+format-prefix = " "
+format-prefix-font = 3
+format-prefix-foreground = ${color.RED}
+
+label = %time%
+label-font = 4
 
 ;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 
@@ -365,14 +270,15 @@ type = internal/mpd
 interval = 2
 
 format-online = <label-song> <icon-prev> <toggle> <icon-next>
-format-online-prefix = " "
-format-online-prefix-font = 1
+format-online-prefix = " "
 format-online-prefix-foreground = ${color.GREEN}
 
 format-playing = ${self.format-online}
 format-paused = <label-song> <toggle>
 
 format-offline = <label-offline>
+format-offline-prefix = " "
+format-offline-prefix-foreground = ${color.RED}
 label-offline = "Offline"
 
 label-song =  "%title% | %artist%"
@@ -396,9 +302,33 @@ icon-next-foreground = ${color.CYAN}
 
 ;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 
+; If you use both a wired and a wireless network, add both modules in config.
+[module/ethernet]
+type = internal/network
+interface = ${system.network_interface}
+
+interval = 1.0
+accumulate-stats = true
+unknown-as-up = true
+
+format-connected = <label-connected>
+format-connected-prefix = " "
+format-connected-prefix-font = 3
+format-connected-prefix-foreground = ${color.CYAN}
+
+format-disconnected = <label-disconnected>
+format-disconnected-prefix = " "
+format-disconnected-prefix-font = 3
+format-disconnected-prefix-foreground = ${color.RED}
+
+label-connected = "%{A1:networkmanager_dmenu &:}%downspeed% | %upspeed%%{A}"
+label-disconnected = "%{A1:networkmanager_dmenu &:}Offline%{A}"
+
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
 [module/network]
 type = internal/network
-interface = wlan0
+interface = ${system.network_interface}
 
 interval = 1.0
 
@@ -411,20 +341,30 @@ unknown-as-up = true
 format-connected = <ramp-signal> <label-connected>
 
 format-disconnected = <label-disconnected>
-format-disconnected-prefix = "睊 "
-format-disconnected-prefix-font = 2
+format-disconnected-prefix = " "
+format-disconnected-prefix-font = 3
 format-disconnected-prefix-foreground = ${color.RED}
 
 label-connected = "%{A1:nmd &:}%essid%%{A}"
 label-disconnected = "%{A1:nmd &:}Disconnected%{A}"
 
-ramp-signal-0 = 直
-ramp-signal-1 = 直
-ramp-signal-2 = 直
-ramp-signal-3 = 直
-ramp-signal-4 = 直
-ramp-signal-font = 2
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+ramp-signal-font = 3
 ramp-signal-foreground = ${color.CYAN}
+
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+[module/sep]
+type = custom/text
+content = ◆
+
+content-background = ${color.BACKGROUND}
+content-foreground = ${color.BLACK}
+content-padding = 2
 
 ;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 ;;	    __________  ______
